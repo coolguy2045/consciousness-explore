@@ -67,6 +67,12 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
   let camDistMax = 6;
   let usingFallback = false;
   let brainSize = 1;
+  let deepRegions = new Set(["thalamus", "brainstem", "insula", "claustrum", "acc"]);
+  let coverWhen = {};
+  let neighborMeshes = { claustrum: [] };
+  let focusTarget = null; // THREE.Vector3 look-at
+  let floatLabelEl = null;
+  let regionCenters = {}; // id -> Vector3 world center
 
   function lang() {
     return document.documentElement.getAttribute("data-lang") || "zh";
@@ -165,9 +171,114 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
     });
   }
 
+  function regionCenter(id) {
+    if (regionCenters[id]) return regionCenters[id].clone();
+    const meshes = regionMeshes[id] || [];
+    if (!meshes.length) return new THREE.Vector3(0, 0, 0);
+    const box = new THREE.Box3();
+    meshes.forEach((mesh) => {
+      if (mesh.userData && mesh.userData.isMarker) {
+        const p = new THREE.Vector3();
+        mesh.getWorldPosition(p);
+        box.expandByPoint(p);
+      } else {
+        box.expandByObject(mesh);
+      }
+    });
+    if (box.isEmpty()) return new THREE.Vector3(0, 0, 0);
+    const c = box.getCenter(new THREE.Vector3());
+    regionCenters[id] = c.clone();
+    return c;
+  }
+
+  function focusOnRegion(id) {
+    const center = regionCenter(id);
+    focusTarget = center.clone();
+    const meshes = regionMeshes[id] || [];
+    let size = brainSize * 0.35;
+    if (meshes.length) {
+      const box = new THREE.Box3();
+      meshes.forEach((m) => {
+        if (m.userData && m.userData.isMarker) {
+          const p = new THREE.Vector3();
+          m.getWorldPosition(p);
+          box.expandByPoint(p);
+        } else box.expandByObject(m);
+      });
+      if (!box.isEmpty()) size = Math.max(box.getSize(new THREE.Vector3()).length(), brainSize * 0.12);
+    }
+    camDist = Math.min(camDistMax, Math.max(camDistMin, Math.max(size * 2.8, brainSize * 0.95)));
+    autoSpin = false;
+    // Prefer angles that reveal each region
+    if (id === "insula") {
+      rotY = 1.15;
+      rotX = 0.22;
+    } else if (id === "thalamus") {
+      rotY = 0.55;
+      rotX = 0.5;
+    } else if (id === "claustrum") {
+      rotY = 1.05;
+      rotX = 0.28;
+    } else if (id === "brainstem") {
+      rotY = 0.25;
+      rotX = -0.2;
+    } else if (id === "acc") {
+      rotY = 0.08;
+      rotX = 0.62;
+    } else if (id === "hotzone") {
+      rotY = 2.95;
+      rotX = 0.32;
+    } else if (id === "pfc") {
+      rotY = 0.15;
+      rotX = 0.28;
+    } else if (id === "dmn") {
+      rotY = 2.75;
+      rotX = 0.42;
+    }
+    if (controlsProxy) controlsProxy.update();
+    updateFloatLabel(id);
+  }
+
+  function updateFloatLabel(id) {
+    if (!floatLabelEl || !camera || !renderer) return;
+    if (!id) {
+      floatLabelEl.hidden = true;
+      return;
+    }
+    const b = B();
+    const r = b.regions && b.regions[id];
+    const name = r ? r.name : id;
+    const center = regionCenter(id);
+    const v = center.clone().project(camera);
+    const canvas = renderer.domElement;
+    const rect = canvas.getBoundingClientRect();
+    const x = (v.x * 0.5 + 0.5) * rect.width;
+    const y = (-v.y * 0.5 + 0.5) * rect.height;
+    if (v.z > 1 || v.z < -1 || x < -20 || y < -20 || x > rect.width + 20 || y > rect.height + 20) {
+      floatLabelEl.hidden = true;
+      return;
+    }
+    floatLabelEl.hidden = false;
+    floatLabelEl.textContent = name;
+    floatLabelEl.style.left = Math.round(x) + "px";
+    floatLabelEl.style.top = Math.round(y - 18) + "px";
+    floatLabelEl.style.borderColor = "#" + (REGION_COLORS[id] || 0xffffff).toString(16).padStart(6, "0");
+  }
+
   function applyHighlight(id) {
     const activeSet = new Set(regionMeshes[id] || []);
-    const hasActive = activeSet.size > 0;
+    const neighborSet = new Set();
+    if (id === "claustrum") {
+      (neighborMeshes.claustrum || []).forEach((m) => neighborSet.add(m));
+    }
+    const coverNames = (coverWhen && coverWhen[id]) || [];
+    const coverSet = new Set();
+    coverNames.forEach((n) => {
+      const mesh = nameToMesh.get(n);
+      if (mesh) coverSet.add(mesh);
+    });
+    const hasActive = activeSet.size > 0 || neighborSet.size > 0;
+    const isDeep = deepRegions.has(id);
 
     nameToMesh.forEach((mesh) => {
       if (mesh.userData && mesh.userData.isMarker) return;
@@ -176,21 +287,42 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
       const mat = mesh.material;
       if (!mat || !base) return;
       const isActive = activeSet.has(mesh);
-      if (hasActive && selected && !isActive) {
-        mat.color.copy(base.color).multiplyScalar(0.35);
-        if (mat.emissive) mat.emissive.setHex(0x000000);
-        mat.opacity = 0.32;
-        mat.transparent = true;
-        mat.depthWrite = true;
-        mat.emissiveIntensity = 0;
-      } else if (isActive) {
+      const isNeighbor = neighborSet.has(mesh);
+      const isCover = coverSet.has(mesh);
+
+      if (isActive) {
         const c = REGION_COLORS[id] || 0xffffff;
         mat.color.setHex(c);
         if (mat.emissive) mat.emissive.setHex(c);
-        mat.emissiveIntensity = 0.85;
+        mat.emissiveIntensity = 1.05;
         mat.opacity = 1;
         mat.transparent = false;
         mat.depthWrite = true;
+        mat.depthTest = true;
+        mesh.renderOrder = 2;
+        mesh.visible = true;
+      } else if (isNeighbor) {
+        const c = REGION_COLORS[id] || 0xfcd34d;
+        mat.color.setHex(c);
+        if (mat.emissive) mat.emissive.setHex(c);
+        mat.emissiveIntensity = 0.45;
+        mat.opacity = 0.7;
+        mat.transparent = true;
+        mat.depthWrite = false;
+        mesh.renderOrder = 1;
+        mesh.visible = true;
+      } else if (hasActive && selected) {
+        // Ghost everything else so deep structures read clearly
+        const ghostOpacity = isCover ? 0.03 : isDeep ? 0.1 : 0.18;
+        mat.color.copy(base.color).multiplyScalar(0.45);
+        if (mat.emissive) mat.emissive.setHex(0x000000);
+        mat.opacity = ghostOpacity;
+        mat.transparent = true;
+        mat.depthWrite = false;
+        mat.emissiveIntensity = 0;
+        mesh.renderOrder = 0;
+        // Keep visible — near-invisible cover for insula corridor
+        mesh.visible = !isCover || ghostOpacity > 0.02;
       } else {
         mat.color.copy(base.color);
         if (mat.emissive) mat.emissive.copy(base.emissive);
@@ -198,6 +330,8 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
         mat.opacity = base.opacity;
         mat.transparent = base.transparent;
         mat.depthWrite = true;
+        mesh.renderOrder = 0;
+        mesh.visible = true;
       }
       mat.needsUpdate = true;
     });
@@ -206,26 +340,40 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
       const mat = mesh.material;
       if (!mat) return;
       const on = id === "claustrum";
-      mat.emissiveIntensity = on ? 0.9 : 0.35;
-      mat.opacity = on ? 1 : 0.85;
+      mesh.scale.setScalar(on ? 1.65 : 1);
+      mat.emissiveIntensity = on ? 1.2 : 0.4;
+      mat.opacity = on ? 1 : 0.75;
       mat.transparent = !on;
       mat.color.setHex(REGION_COLORS.claustrum);
       if (mat.emissive) mat.emissive.setHex(REGION_COLORS.claustrum);
+      mat.depthWrite = on;
+      mesh.renderOrder = on ? 3 : 1;
+      mesh.visible = true;
       mat.needsUpdate = true;
     });
+
+    if (id) focusOnRegion(id);
+    else {
+      focusTarget = new THREE.Vector3(0, 0, 0);
+      updateFloatLabel(null);
+    }
   }
 
-  function renderChips() {
+  function renderChips  function renderChips() {
     if (!chipBox) return;
     const b = B();
     chipBox.innerHTML = REGION_IDS.map((id) => {
       const name = b.regions && b.regions[id] ? b.regions[id].name : id;
+      const hex = "#" + (REGION_COLORS[id] || 0xffffff).toString(16).padStart(6, "0");
       return `<button type="button" class="brain-chip" data-region="${id}" aria-pressed="${
         selected === id ? "true" : "false"
-      }">${escapeHtml(name)}</button>`;
+      }" style="--chip-accent:${hex}"><span class="brain-chip-dot" aria-hidden="true"></span>${escapeHtml(name)}</button>`;
     }).join("");
     chipBox.querySelectorAll(".brain-chip").forEach((btn) => {
-      btn.addEventListener("click", () => showDetail(btn.dataset.region));
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        showDetail(btn.dataset.region);
+      });
     });
   }
 
@@ -323,23 +471,35 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
       regionMeshes[id] = [];
     });
     allPickable = [];
+    regionCenters = {};
+    neighborMeshes = { claustrum: [] };
     const regions = (regionMap && regionMap.regions) || {};
     Object.keys(regions).forEach((id) => {
+      if (id === "claustrumNeighbors") return;
       (regions[id] || []).forEach((name) => {
         const mesh = nameToMesh.get(name);
         if (mesh) {
-          mesh.userData.regionId = id;
+          // Keep first assigned regionId for picking; multi-network meshes stay in each list
+          if (!mesh.userData.regionId) mesh.userData.regionId = id;
           regionMeshes[id].push(mesh);
           if (!allPickable.includes(mesh)) allPickable.push(mesh);
         }
       });
     });
+    ((regionMap && regionMap.regions && regionMap.regions.claustrumNeighbors) || []).forEach((name) => {
+      const mesh = nameToMesh.get(name);
+      if (mesh) neighborMeshes.claustrum.push(mesh);
+    });
+    if (regionMap && Array.isArray(regionMap.deepRegions)) {
+      deepRegions = new Set(regionMap.deepRegions);
+    }
+    coverWhen = (regionMap && regionMap.coverWhen) || {};
   }
 
   /** Small markers at geometry centroids — never at mesh origin (atlas is body-scaled). */
   function buildClaustrumMarkers() {
     const markers = [];
-    const s = Math.max(brainSize * 0.035, 0.004);
+    const s = Math.max(brainSize * 0.042, 0.005);
     ["l", "r"].forEach((side) => {
       const putamen = nameToMesh.get(`Putamen.${side}`);
       const insula =
@@ -598,11 +758,19 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
       obj.receiveShadow = false;
       obj.frustumCulled = false;
       styleMeshAsBrainTissue(obj, cat);
-      if (name) nameToMesh.set(name, obj);
-      // Prefer original glTF node name stored by loader
-      if (obj.userData && obj.userData.name) {
-        nameToMesh.set(obj.userData.name, obj);
+      // Index every plausible name BEFORE reparent (attach would lose parent names)
+      const nameKeys = new Set();
+      if (name) nameKeys.add(name);
+      if (obj.name) nameKeys.add(obj.name);
+      if (obj.userData && obj.userData.name) nameKeys.add(obj.userData.name);
+      let p = obj.parent;
+      let guard = 0;
+      while (p && guard++ < 6) {
+        if (p.name && p.name !== "Scene" && p.name !== "RootNode") nameKeys.add(p.name);
+        if (p.userData && p.userData.name) nameKeys.add(p.userData.name);
+        p = p.parent;
       }
+      nameKeys.forEach((k) => nameToMesh.set(k, obj));
       tissueRoot.attach(obj);
       visibleCount++;
     });
@@ -624,11 +792,16 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
     assignRegions();
     const mapped = REGION_IDS.reduce((n, id) => n + ((regionMeshes[id] || []).length), 0);
-    console.info("[brain] visible", visibleCount, "region-mapped", mapped, "names", nameToMesh.size);
+    const per = {};
+    REGION_IDS.forEach((id) => {
+      per[id] = (regionMeshes[id] || []).length;
+    });
+    console.info("[brain] visible", visibleCount, "region-mapped", mapped, "names", nameToMesh.size, per);
 
     buildClaustrumMarkers();
     // Refit excluding oversized markers: use tissue only for camera
     fitCameraToObject(tissueRoot);
+    regionCenters = {};
     brainRoot.rotation.x = -0.12;
 
     if (mapped < 4) {
@@ -744,6 +917,11 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
     renderer.setClearColor(0x121018, 1);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     container.appendChild(renderer.domElement);
+    floatLabelEl = document.createElement("div");
+    floatLabelEl.id = "brain-float-label";
+    floatLabelEl.className = "brain-float-label";
+    floatLabelEl.hidden = true;
+    container.appendChild(floatLabelEl);
 
     scene.add(new THREE.AmbientLight(0xfff5f8, 1.15));
     const key = new THREE.DirectionalLight(0xffffff, 1.25);
@@ -759,12 +937,15 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
     raycaster = new THREE.Raycaster();
     pointer = new THREE.Vector2();
 
+    focusTarget = new THREE.Vector3(0, 0, 0);
     controlsProxy = {
       update() {
-        camera.position.x = Math.sin(rotY) * Math.cos(rotX) * camDist;
-        camera.position.y = Math.sin(rotX) * camDist + brainSize * 0.02;
-        camera.position.z = Math.cos(rotY) * Math.cos(rotX) * camDist;
-        camera.lookAt(0, 0, 0);
+        const t = focusTarget || new THREE.Vector3(0, 0, 0);
+        camera.position.x = t.x + Math.sin(rotY) * Math.cos(rotX) * camDist;
+        camera.position.y = t.y + Math.sin(rotX) * camDist + brainSize * 0.02;
+        camera.position.z = t.z + Math.cos(rotY) * Math.cos(rotX) * camDist;
+        camera.lookAt(t.x, t.y, t.z);
+        if (selected) updateFloatLabel(selected);
       }
     };
     controlsProxy.update();

@@ -7,6 +7,44 @@
     "deep_grey",
     "white_matter"
   ],
+  "hiddenCategories": [
+    "arteries",
+    "veins_sinuses",
+    "cranial_nerves",
+    "tracts",
+    "ventricles",
+    "meninges_dura"
+  ],
+  "deepRegions": [
+    "thalamus",
+    "brainstem",
+    "insula",
+    "claustrum",
+    "acc"
+  ],
+  "coverWhen": {
+    "insula": [
+      "Superior temporal gyrus (Lateral part).l",
+      "Superior temporal gyrus (Lateral part).r",
+      "Middle temporal gyrus.l",
+      "Middle temporal gyrus.r",
+      "Temporal pole.l",
+      "Temporal pole.r",
+      "Temporal plane.l",
+      "Temporal plane.r",
+      "Transverse temporal gyri.l",
+      "Transverse temporal gyri.r",
+      "Opercular part of inferior frontal gyrus.l",
+      "Opercular part of inferior frontal gyrus.r"
+    ],
+    "thalamus": [],
+    "claustrum": [
+      "Superior temporal gyrus (Lateral part).l",
+      "Superior temporal gyrus (Lateral part).r",
+      "Middle temporal gyrus.l",
+      "Middle temporal gyrus.r"
+    ]
+  },
   "regions": {
     "thalamus": [
       "Anterior nuclei of thalamus.l",
@@ -44,7 +82,9 @@
       "Transverse frontopolar gyrus and sulcus*.l",
       "Transverse frontopolar gyrus and sulcus*.r",
       "Triangular part of inferior frontal gyrus.l",
-      "Triangular part of inferior frontal gyrus.r"
+      "Triangular part of inferior frontal gyrus.r",
+      "Straight gyrus (Gyrus rectus).l",
+      "Straight gyrus (Gyrus rectus).r"
     ],
     "hotzone": [
       "Angular gyrus.l",
@@ -79,6 +119,12 @@
       "Transverse occipital sulcus.r"
     ],
     "claustrum": [],
+    "claustrumNeighbors": [
+      "Putamen.l",
+      "Putamen.r",
+      "Insula (Subcentral gyrus and ant. and post. sulci*).l",
+      "Insula (Subcentral gyrus and ant. and post. sulci*).r"
+    ],
     "brainstem": [
       "Medulla oblongata.l",
       "Midbrain.l",
@@ -86,7 +132,16 @@
       "Pons.l",
       "Pons.r",
       "Pyramid of medulla oblongata.l",
-      "Pyramid of medulla oblongata.r"
+      "Pyramid of medulla oblongata.r",
+      "Olive.l",
+      "Olive.r",
+      "Superior colliculus.l",
+      "Superior colliculus.r",
+      "Inferior colliculus.l",
+      "Inferior colliculus.r",
+      "Red nucleus.l",
+      "Red nucleus.r",
+      "Aqueduct of midbrain"
     ],
     "dmn": [
       "Angular gyrus.l",
@@ -102,11 +157,11 @@
       "Precuneus.l",
       "Precuneus.r",
       "Superior frontal gyrus.l",
-      "Superior frontal gyrus.r"
+      "Superior frontal gyrus.r",
+      "Cingulate sulcus (Marginal part*).l",
+      "Cingulate sulcus (Marginal part*).r"
     ],
     "acc": [
-      "Cingulate gyrus (Posteroventral part*).l",
-      "Cingulate gyrus (Posteroventral part*).r",
       "Cingulate gyrus and sulcus (Middle anterior part).l",
       "Cingulate gyrus and sulcus (Middle anterior part).r"
     ],
@@ -116,13 +171,5 @@
       "Insula (Subcentral gyrus and ant. and post. sulci*).l",
       "Insula (Subcentral gyrus and ant. and post. sulci*).r"
     ]
-  },
-  "hiddenCategories": [
-    "arteries",
-    "veins_sinuses",
-    "cranial_nerves",
-    "tracts",
-    "ventricles",
-    "meninges_dura"
-  ]
+  }
 }

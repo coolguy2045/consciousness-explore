@@ -163,7 +163,7 @@ window.I18N = {
           "name": "屏狀核 Claustrum",
           "role": "薄層灰質，與廣泛皮質互聯；功能仍不清楚。",
           "link": "Crick & Koch 曾猜想其或參與綁定／意識統一；後續刺激與損傷證據混雜，目前屬開放假說，不宜當成定論。",
-          "note": "來源 atlas 無獨立屏狀核網格；圖中為殼核—島葉交界的教學近似標記，實際極薄。"
+          "note": "來源 atlas 無獨立屏狀核網格。黃球為殼核—島葉交界的近似標記；同時淡亮殼核與島葉以標示所在走廊。"
         },
         "brainstem": {
           "name": "腦幹覺醒系統",
@@ -181,13 +181,13 @@ window.I18N = {
           "name": "前扣帶 ACC",
           "role": "衝突監測、動機顯著性、疼痛情感面向、注意控制。",
           "link": "常出現在意識報告、錯誤覺察與「努力感」相關網絡；與突顯網絡（salience）及前島蓋互動。",
-          "note": "內側額葉中線結構。"
+          "note": "內側額葉中線；本模型以扣帶中前部標示 ACC 核心。點標籤時鏡頭會轉到內側視野。"
         },
         "insula": {
           "name": "島葉 Insula",
           "role": "內感覺、身體情緒、顯著性；前島與覺知「此刻狀態」相關討論多。",
           "link": "預測加工／具身自我模型常引用島葉。與「感受自己」的層次有關，但是否為現象意識必要條件仍爭議。",
-          "note": "深藏於外側溝內；點選島葉皮層網格即可高亮。"
+          "note": "深藏於外側溝內。點標籤時會半透明化顳葉蓋，露出島葉並轉到側面視野。"
         }
       }
     },
@@ -1094,7 +1094,7 @@ window.I18N = {
           "name": "Thalamus",
           "role": "Relay and cortico-thalamic hub; shapes arousal and cortical synchrony.",
           "link": "Thalamo-cortical connectivity often drops under anesthesia. Related to gating/arousal — not a simple on/off switch.",
-          "note": "Works with ascending brainstem systems."
+          "note": "Works with ascending brainstem systems. Selecting this chip ghosts the cortex so the deep nuclei are visible."
         },
         "pfc": {
           "name": "Prefrontal cortex (PFC)",
@@ -1112,7 +1112,7 @@ window.I18N = {
           "name": "Claustrum",
           "role": "Thin sheet with broad cortical links; function still unclear.",
           "link": "Crick & Koch speculated a role in binding/unity; evidence mixed — open hypothesis, not settled fact.",
-          "note": "No separate claustrum mesh in the source atlas; marker is an educational approx near the putamen–insula interface."
+          "note": "No separate claustrum mesh in the source atlas. Yellow spheres mark the putamen–insula corridor; putamen and insula are softly lit as neighbors."
         },
         "brainstem": {
           "name": "Brainstem arousal",
@@ -1130,13 +1130,13 @@ window.I18N = {
           "name": "Anterior cingulate (ACC)",
           "role": "Conflict monitoring, motivational salience, affective pain, control.",
           "link": "Shows up in report, error awareness, and effort; interacts with salience network and anterior insula.",
-          "note": "Midline frontal structure."
+          "note": "Midline frontal; this atlas marks ACC via mid-anterior cingulate. The chip swings the camera to a medial view."
         },
         "insula": {
           "name": "Insula",
           "role": "Interoception, bodily feeling, salience; anterior insula often discussed for “sensing now.”",
           "link": "Predictive-processing / embodied-self models cite the insula. Necessity for phenomenality still debated.",
-          "note": "Buried in the lateral sulcus; click the insular cortical mesh to highlight."
+          "note": "Buried in the lateral sulcus. Selecting this chip fades the temporal operculum and swings to a lateral view."
         }
       }
     },
