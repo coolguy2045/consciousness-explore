@@ -83,8 +83,11 @@
       <p class="lede" data-i18n="brain.lede"></p>
       <div class="brain-layout">
         <div class="brain-stage">
-          <div id="brain-canvas" class="brain-canvas" role="img" aria-label="3D brain"></div>
+          <div id="brain-canvas" class="brain-canvas" role="img" aria-label="3D brain">
+            <div id="brain-loading" class="brain-loading" hidden></div>
+          </div>
           <p class="brain-controls-hint" data-i18n="brain.dragHint"></p>
+          <p class="brain-credit"><a href="assets/brain/ATTRIBUTION.md" data-i18n="brain.attrLink">Brain model attribution</a></p>
         </div>
         <div class="brain-side">
           <div id="brain-chips" class="brain-chips"></div>
@@ -99,7 +102,8 @@
       <span class="section-label" data-i18n="science.label">科學</span>
       <h2 data-i18n="science.title">意識的科學理論</h2>
       <p class="lede" data-i18n="science.lede"></p>
-      <div class="grid-2" id="science-cards"></div>
+      <p class="toc-hint" data-i18n="science.tocHint"></p>
+      <div id="science-theories" class="essay-stack"></div>
     </section>
 
     <!-- Western philosophy -->
@@ -108,6 +112,8 @@
       <h2 data-i18n="west.title">西方哲學中的意識</h2>
       <p class="lede" data-i18n="west.lede"></p>
       <div class="figure-list" id="west-figures"></div>
+      <p class="lede-extra" data-i18n="west.ledeExtra"></p>
+      <div id="west-essays" class="essay-stack"></div>
     </section>
 
     <!-- East + Meditation -->
@@ -118,6 +124,8 @@
 
       <h3 data-i18n="meditation.tradTitle"></h3>
       <div class="grid-2" id="east-cards" style="margin-top:0.85rem"></div>
+      <h3 style="margin-top:2rem" data-i18n="meditation.essaysTitle"></h3>
+      <div id="east-essays" class="essay-stack"></div>
 
       <h3 style="margin-top:2rem" data-i18n="meditation.stagesTitle"></h3>
       <p class="prose" style="margin-top:0.5rem"><span data-i18n="meditation.stagesLede"></span></p>
@@ -136,6 +144,7 @@
       <span class="section-label" data-i18n="unconscious.label">潛意識</span>
       <h2 data-i18n="unconscious.title">潛意識、集體潛意識與多重「無意識」</h2>
       <p class="lede" data-i18n="unconscious.lede"></p>
+      <p class="lede-extra" data-i18n="unconscious.ledeExtra"></p>
 
       <div class="grid-2" id="unconscious-models"></div>
 
@@ -149,6 +158,8 @@
 
       <h3 style="margin-top:2rem" data-i18n="unconscious.pyramidTitle"></h3>
       <div class="sense-pyramid" id="sense-pyramid"></div>
+      <h3 style="margin-top:2rem" data-i18n="unconscious.essaysTitle"></h3>
+      <div id="unconscious-essays" class="essay-stack"></div>
       <p class="callout" data-i18n="unconscious.note"></p>
     </section>
 
@@ -259,13 +270,21 @@
     <div class="footer-inner">
       <p data-i18n="footer.disclaimer"></p>
       <p data-i18n="footer.credit"></p>
-      <p class="portrait-credit"><a href="assets/portraits/ATTRIBUTION.md">Portrait attribution</a></p>
+      <p class="portrait-credit"><a href="assets/portraits/ATTRIBUTION.md">Portrait attribution</a> · <a href="assets/brain/ATTRIBUTION.md">Brain model attribution</a></p>
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
   <script src="js/i18n.js"></script>
-  <script src="js/brain.js"></script>
+  <script src="js/content-deep.js"></script>
+  <script type="module" src="js/brain.js"></script>
   <script src="js/mindmaps.js"></script>
   <script src="js/games.js"></script>
   <script src="js/app.js"></script>

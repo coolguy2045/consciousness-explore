@@ -29,6 +29,44 @@
     return escapeHtml(s).replace(/'/g, "&#39;");
   }
 
+  function renderSectionBlocks(sections) {
+    if (!sections || !sections.length) return "";
+    return sections
+      .map((sec) => {
+        const ps = (sec.p || [])
+          .map((para) => `<p>${escapeHtml(para)}</p>`)
+          .join("");
+        const bullets =
+          sec.bullets && sec.bullets.length
+            ? `<ul class="essay-bullets">${sec.bullets
+                .map((b) => `<li>${escapeHtml(b)}</li>`)
+                .join("")}</ul>`
+            : "";
+        return `<div class="essay-sec"><h4>${escapeHtml(sec.h || "")}</h4>${ps}${bullets}</div>`;
+      })
+      .join("");
+  }
+
+  function renderEssayArticles(list, openFirst) {
+    if (!list || !list.length) return "";
+    return list
+      .map((essay, idx) => {
+        const open = openFirst && idx === 0 ? " open" : "";
+        const dates = essay.dates
+          ? `<span class="figure-dates">${escapeHtml(essay.dates)}</span>`
+          : "";
+        const tag = essay.tag
+          ? `<span class="essay-tag">${escapeHtml(essay.tag)}</span>`
+          : "";
+        return `<details class="essay-article"${open}><summary><span class="essay-sum-text"><span class="essay-title">${escapeHtml(
+          essay.title || ""
+        )}</span>${dates}${tag}</span></summary><div class="essay-body">${renderSectionBlocks(
+          essay.sections
+        )}</div></details>`;
+      })
+      .join("");
+  }
+
   function portraitHtml(f) {
     if (f.portrait) {
       return `<img class="portrait" src="${escapeAttr(f.portrait)}" alt="${escapeAttr(
@@ -88,9 +126,11 @@
         .join("");
     }
 
-    // Science
-    const sci = document.getElementById("science-cards");
-    if (sci && d.science.cards) {
+    // Science deep theories
+    const sci = document.getElementById("science-theories");
+    if (sci && d.science.theories) {
+      sci.innerHTML = renderEssayArticles(d.science.theories, true);
+    } else if (sci && d.science.cards) {
       sci.innerHTML = d.science.cards
         .map(
           (c) =>
@@ -111,11 +151,20 @@
               f
             )}<div class="figure-text"><span class="name">${escapeHtml(
               f.name
-            )}</span><span class="meta">${escapeHtml(f.meta)}</span><p>${escapeHtml(
+            )}</span>${
+              f.dates
+                ? `<span class="figure-dates">${escapeHtml(f.dates)}</span>`
+                : ""
+            }<span class="meta">${escapeHtml(f.meta)}</span><p>${escapeHtml(
               f.body
             )}</p></div></article>`
         )
         .join("");
+    }
+
+    const westEssays = document.getElementById("west-essays");
+    if (westEssays && d.west.essays) {
+      westEssays.innerHTML = renderEssayArticles(d.west.essays, false);
     }
 
     // East cards
@@ -132,9 +181,18 @@
               )}</span>`;
           return `<article class="card card-with-portrait">${img}<div><h4>${escapeHtml(
             c.title
-          )}</h4><p>${escapeHtml(c.body)}</p></div></article>`;
+          )}</h4>${
+            c.dates
+              ? `<span class="figure-dates">${escapeHtml(c.dates)}</span>`
+              : ""
+          }<p>${escapeHtml(c.body)}</p></div></article>`;
         })
         .join("");
+    }
+
+    const eastEssays = document.getElementById("east-essays");
+    if (eastEssays && d.meditation.essays) {
+      eastEssays.innerHTML = renderEssayArticles(d.meditation.essays, false);
     }
 
     // Meditation stages
@@ -171,7 +229,11 @@
             : `<span class="portrait mono" aria-hidden="true">${escapeHtml(m.mono || "?")}</span>`;
           return `<article class="card card-with-portrait">${img}<div><h3>${escapeHtml(
             m.title
-          )}</h3><p>${escapeHtml(m.body)}</p></div></article>`;
+          )}</h3>${
+            m.dates
+              ? `<span class="figure-dates">${escapeHtml(m.dates)}</span>`
+              : ""
+          }<p>${escapeHtml(m.body)}</p></div></article>`;
         })
         .join("");
     }
@@ -179,14 +241,34 @@
     // Iceberg
     const ice = document.getElementById("iceberg");
     if (ice && d.unconscious.iceberg) {
-      ice.innerHTML = d.unconscious.iceberg
-        .map(
-          (layer, i) =>
-            `<div class="ice-layer ice-${i}"><strong>${escapeHtml(layer.k)}</strong><span>${escapeHtml(
-              layer.v
-            )}</span></div>`
-        )
+      const legend = d.unconscious.iceberg
+        .map((layer) => {
+          const tone = layer.tone || "cog";
+          return `<span class="ice-leg"><i class="tone-${escapeAttr(
+            tone
+          )}" style="background:var(--ice-${escapeAttr(tone)}, #94a3b8)"></i>${escapeHtml(
+            layer.icon || ""
+          )} ${escapeHtml(layer.k)}</span>`;
+        })
         .join("");
+      ice.innerHTML =
+        `<div class="iceberg-legend">${legend}</div>` +
+        d.unconscious.iceberg
+          .map((layer) => {
+            const tone = layer.tone || "cog";
+            return `<div class="ice-layer tone-${escapeAttr(tone)}" title="${escapeAttr(
+              layer.tip || ""
+            )}"><span class="ice-icon" aria-hidden="true">${escapeHtml(
+              layer.icon || ""
+            )}</span><strong>${escapeHtml(layer.k)}</strong><span>${escapeHtml(
+              layer.v
+            )}</span>${
+              layer.tip
+                ? `<span class="ice-tip">${escapeHtml(layer.tip)}</span>`
+                : ""
+            }</div>`;
+          })
+          .join("");
     }
 
     // Unconscious compare table
@@ -211,6 +293,11 @@
             )}</strong><span>${escapeHtml(p.d)}</span></div>`
         )
         .join("");
+    }
+
+    const uncEssays = document.getElementById("unconscious-essays");
+    if (uncEssays && d.unconscious.essays) {
+      uncEssays.innerHTML = renderEssayArticles(d.unconscious.essays, false);
     }
 
     // Research
