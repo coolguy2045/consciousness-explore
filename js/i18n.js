@@ -9,6 +9,7 @@ window.I18N = {
     "nav": {
       "define": "定義",
       "brain": "大腦",
+      "embodied": "身體",
       "science": "科學",
       "west": "西方",
       "meditation": "禪修",
@@ -43,6 +44,10 @@ window.I18N = {
       {
         "h": "#brain",
         "t": "3D 大腦區域"
+      },
+      {
+        "h": "#embodied",
+        "t": "身體與意識"
       },
       {
         "h": "#science",
@@ -131,6 +136,8 @@ window.I18N = {
       "loadingProgress": "載入腦模型… {pct}%",
       "loadFail": "無法載入 3D 腦模型，請改用下方標籤。",
       "webglFail": "此裝置無法使用 WebGL，請改用下方標籤瀏覽腦區說明。",
+      "fallbackNote": "解剖 GLB 無法顯示，已改用可辨識的示意腦（仍可點選區域）。",
+      "emptyFail": "腦模型載入後沒有可見網格，已切換示意腦。",
       "attrLink": "腦模型來源與授權",
       "disclaimer": "教學用可視化：網格來自開源解剖 atlas（非臨床級）。屏狀核在來源中無獨立網格，以近似標記表示。區域是否「產生」意識仍屬激烈爭論。",
       "regions": {
@@ -183,6 +190,30 @@ window.I18N = {
           "note": "深藏於外側溝內；點選島葉皮層網格即可高亮。"
         }
       }
+    },
+    "embodied": {
+      "label": "具身與身體",
+      "title": "頭顱以外：與覺知相關的身體系統",
+      "lede": "意識研究常聚焦大腦皮質，但情緒、內感覺與「活著的感覺」也依賴身體迴路。以下採當代神經科學與具身認知的謹慎表述：影響／調控／相關，而非把腸道或心臟說成第二個大腦皮質。",
+      "disclaimer": "「第二大腦」是通俗隱喻：腸神經系統（ENS）高度自主、神經元數量龐大，但結構與功能都不是第二個大腦皮質。下列機制多屬相關與調控證據，因果方向常雙向且情境依賴。",
+      "cards": [
+        {
+          "title": "腸神經系統與腸—腦軸",
+          "body": "ENS 分布於消化道壁，能在相當程度上獨立協調蠕動與局部分泌，並透過迷走神經、脊髓傳入、免疫與內分泌訊號與中樞雙向溝通。腸道微生物組可影響色胺酸／血清素前驅物、短鏈脂肪酸與免疫狀態，進而調控情緒、壓力反應與內感覺——這是「腸—腦軸」研究的核心，不是腸子在「思考命題」。臨床上可見腸躁症與焦慮／憂鬱共病、迷走神經刺激與部分益生菌試驗的情緒效應，但效應量與可重複性仍在檢驗中。"
+        },
+        {
+          "title": "心臟、自主神經與內感覺",
+          "body": "內感覺（interoception）指對心跳、呼吸、內臟狀態等身體訊號的感覺與推論。島葉、前扣帶、脑干核團與自主神經系統（交感／副交感，含迷走神經）共同支持「身體感覺如何成為感受」。心率變異性、呼吸節奏與威脅／安全狀態相關；Craig、Seth 等把情緒與自我感部分建基於內感覺預測。這支持「具身情緒」，但不表示心臟本身產生現象意識。"
+        },
+        {
+          "title": "免疫—腦與內分泌",
+          "body": "細胞激素、下視丘—垂體—腎上腺（HPA）軸與睡眠／發炎狀態會改變警覺、動機與情緒色調（例如生病行為 sickness behavior）。免疫訊號可經迷走神經與室周器官影響腦；慢性壓力則反向改變免疫與腸屏障。這些是意識的「背景條件」與內容偏向（疲勞、疼痛、憂鬱色調），通常不單獨等同意識開關。"
+        },
+        {
+          "title": "具身認知（簡述）",
+          "body": "具身認知主張認知與情緒部分依賴身體型態、感覺運動回路與環境耦合，而非僅是抽象符號運算。對意識討論的啟發是：主體的視角、行動可能性與內感覺預測，會塑造「像什麼樣」的經驗結構。宜避免誇大成「沒有身體就不可能有任何覺知」的形上學口號；機器人／臨床去傳入病例顯示問題更細緻。"
+        }
+      ]
     },
     "science": {
       "label": "科學",
@@ -1428,6 +1459,7 @@ window.I18N = {
     "nav": {
       "define": "Definitions",
       "brain": "Brain",
+      "embodied": "Body",
       "science": "Science",
       "west": "West",
       "meditation": "Meditation",
@@ -1462,6 +1494,10 @@ window.I18N = {
       {
         "h": "#brain",
         "t": "3D brain"
+      },
+      {
+        "h": "#embodied",
+        "t": "Body & awareness"
       },
       {
         "h": "#science",
@@ -1550,6 +1586,8 @@ window.I18N = {
       "loadingProgress": "Loading brain… {pct}%",
       "loadFail": "Could not load the 3D brain model. Use the chips below.",
       "webglFail": "WebGL unavailable on this device — use the region chips below.",
+      "fallbackNote": "Anatomical GLB could not be shown; using a recognizable stylized brain (regions still clickable).",
+      "emptyFail": "No visible meshes after load; switched to stylized brain.",
       "attrLink": "Brain model attribution",
       "disclaimer": "Educational visualization from an open anatomical atlas (not clinical-grade). Claustrum has no separate source mesh — shown as an approximate marker. Whether any region “produces” consciousness remains contested.",
       "regions": {
@@ -1602,6 +1640,30 @@ window.I18N = {
           "note": "Buried in the lateral sulcus; click the insular cortical mesh to highlight."
         }
       }
+    },
+    "embodied": {
+      "label": "Embodiment",
+      "title": "Beyond the skull: body systems linked to awareness",
+      "lede": "Consciousness research often targets cortex, yet mood, interoception, and the felt sense of being alive also depend on bodily loops. Below is a careful scientific framing: influence, regulation, and correlation — not treating gut or heart as a second cerebral cortex.",
+      "disclaimer": "“Second brain” is a popular metaphor. The enteric nervous system (ENS) is large and relatively autonomous, but it is not a second cortex. Evidence below is often bidirectional and context-dependent.",
+      "cards": [
+        {
+          "title": "ENS and the gut–brain axis",
+          "body": "The ENS in the gut wall can locally coordinate motility and secretion, and talks to the CNS via vagal and spinal afferents, immune and endocrine signals. The microbiome can modulate tryptophan pathways, short-chain fatty acids, and immune tone — cascading into mood, stress reactivity, and interoception. That is the gut–brain axis: not the gut “doing propositional thought.” IBS–anxiety comorbidity and mixed probiotic / vagal-stimulation findings are active research, with effect sizes still under scrutiny."
+        },
+        {
+          "title": "Heart, ANS, and interoception",
+          "body": "Interoception is sensing and inferring heartbeat, breathing, and visceral state. Insula, anterior cingulate, brainstem nuclei, and the autonomic nervous system (sympathetic / parasympathetic, including the vagus) support how bodily signals become feelings. Heart-rate variability and respiratory rhythm track threat vs safety states; Craig, Seth and others tie emotion and aspects of selfhood to interoceptive prediction. This backs embodied emotion — it does not mean the heart itself generates phenomenal consciousness."
+        },
+        {
+          "title": "Immune–brain and endocrine links",
+          "body": "Cytokines, the HPA axis, sleep and inflammation shift alertness, motivation, and affective tone (e.g., sickness behavior). Immune signals reach the brain via vagal routes and circumventricular organs; chronic stress feeds back onto immunity and gut barrier function. These are background conditions and content biases (fatigue, pain, low mood), usually not a sole on/off switch for consciousness."
+        },
+        {
+          "title": "Embodied cognition (brief)",
+          "body": "Embodied cognition holds that thinking and feeling partly depend on body morphology, sensorimotor loops, and coupling to the environment — not only abstract symbol crunching. For consciousness debates, the tip is that perspective, action possibilities, and interoceptive prediction shape the structure of “what it is like.” Avoid the slogan that “no body ⇒ no awareness whatsoever”; robotics and clinical deafferentation cases make the issue more nuanced."
+        }
+      ]
     },
     "science": {
       "label": "Science",

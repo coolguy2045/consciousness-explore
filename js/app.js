@@ -127,6 +127,18 @@
     }
 
     // Science deep theories
+    const embodiedCards = document.getElementById("embodied-cards");
+    if (embodiedCards && d.embodied && d.embodied.cards) {
+      embodiedCards.innerHTML = d.embodied.cards
+        .map(
+          (c) =>
+            `<article class="card embodied-card"><h3>${escapeHtml(c.title)}</h3><p>${escapeHtml(
+              c.body
+            )}</p></article>`
+        )
+        .join("");
+    }
+
     const sci = document.getElementById("science-theories");
     if (sci && d.science.theories) {
       sci.innerHTML = renderEssayArticles(d.science.theories, true);
