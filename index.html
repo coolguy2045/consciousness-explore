@@ -85,7 +85,7 @@
       <div class="brain-layout">
         <div class="brain-stage">
           <div id="brain-canvas" class="brain-canvas" role="img" aria-label="3D brain">
-            <div id="brain-loading" class="brain-loading" hidden></div>
+            <div id="brain-loading" class="brain-loading">Loading 3D brain…</div>
           </div>
           <p class="brain-controls-hint" data-i18n="brain.dragHint"></p>
           <p class="brain-credit"><a href="assets/brain/ATTRIBUTION.md" data-i18n="brain.attrLink">Brain model attribution</a></p>
@@ -300,14 +300,14 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      "three": "./js/vendor/three/build/three.module.js",
+      "three/addons/": "./js/vendor/three/examples/jsm/"
     }
   }
   </script>
   <script src="js/i18n.js"></script>
   <script src="js/content-deep.js"></script>
-  <script type="module" src="js/brain.js"></script>
+  <script type="module" src="js/brain.js?v=brainfix2"></script>
   <script src="js/mindmap-data.js"></script>
   <script src="js/mindmaps.js"></script>
   <script src="js/games.js"></script>
