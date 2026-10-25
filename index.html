@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="意識探索：東西方哲學、宗教與科學對意識的定義與研究，含互動小遊戲。Bilingual Traditional Chinese / English." />
+  <meta name="description" content="意識探索：定義、3D 大腦、東西方哲學、佛教禪修、潛意識圖表、心智圖、科學與小遊戲。Bilingual Traditional Chinese / English." />
   <title>意識 · Consciousness</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,12 +21,15 @@
       </a>
       <nav aria-label="Primary">
         <ul class="nav-links" id="nav-links">
-          <li><a href="#what" data-i18n="nav.what">何謂意識</a></li>
-          <li><a href="#west" data-i18n="nav.west">西方哲學</a></li>
-          <li><a href="#east" data-i18n="nav.east">東方思想</a></li>
+          <li><a href="#define" data-i18n="nav.define">定義</a></li>
+          <li><a href="#brain" data-i18n="nav.brain">大腦</a></li>
           <li><a href="#science" data-i18n="nav.science">科學</a></li>
-          <li><a href="#research" data-i18n="nav.research">最新研究</a></li>
-          <li><a href="#games" data-i18n="nav.games">小遊戲</a></li>
+          <li><a href="#west" data-i18n="nav.west">西方</a></li>
+          <li><a href="#meditation" data-i18n="nav.meditation">禪修</a></li>
+          <li><a href="#unconscious" data-i18n="nav.unconscious">潛意識</a></li>
+          <li><a href="#mindmaps" data-i18n="nav.mindmaps">心智圖</a></li>
+          <li><a href="#research" data-i18n="nav.research">研究</a></li>
+          <li><a href="#games" data-i18n="nav.games">遊戲</a></li>
           <li><a href="#resources" data-i18n="nav.resources">資源</a></li>
         </ul>
       </nav>
@@ -38,64 +41,65 @@
   </header>
 
   <main id="main">
-    <!-- Hero -->
+    <!-- Overview -->
     <section class="section hero" id="home">
-      <div class="hero-badge" data-i18n="hero.badge">哲學 · 宗教 · 科學 · 體驗</div>
+      <div class="hero-badge" data-i18n="hero.badge">哲學 · 大腦 · 禪修 · 科學 · 體驗</div>
       <h1 data-i18n="hero.title">意識</h1>
-      <p class="lede" style="font-family:var(--font-serif);color:var(--accent-3);margin-bottom:0.75rem" data-i18n="hero.subtitle">探索東西方、信仰與科學如何描繪心智</p>
-      <p class="lede" data-i18n="hero.lede">從奧義書的四態到查默斯的難題，從莊周夢蝶到全球工作空間理論——這是一份可互動、可對照的意識地圖。</p>
+      <p class="lede" style="font-family:var(--font-serif);color:var(--accent-3);margin-bottom:0.75rem" data-i18n="hero.subtitle">從定義到大腦、從禪修到潛意識的互動地圖</p>
+      <p class="lede" data-i18n="hero.lede"></p>
       <div class="hero-cta">
-        <a class="btn btn-primary" href="#what" data-i18n="hero.ctaExplore">開始探索</a>
-        <a class="btn btn-ghost" href="#games" data-i18n="hero.ctaGames">試試小遊戲</a>
+        <a class="btn btn-primary" href="#define" data-i18n="hero.ctaExplore">開始探索</a>
+        <a class="btn btn-ghost" href="#brain" data-i18n="hero.ctaBrain">3D 大腦</a>
+        <a class="btn btn-ghost" href="#games" data-i18n="hero.ctaGames">小遊戲</a>
       </div>
       <div class="hero-orbs" aria-hidden="false">
-        <div class="orb"><strong data-i18n="hero.orb1t">現象經驗</strong><span data-i18n="hero.orb1d">「像什麼樣」的主觀質感</span></div>
-        <div class="orb"><strong data-i18n="hero.orb2t">通道與自我</strong><span data-i18n="hero.orb2d">可報告、可調控、有「我」</span></div>
-        <div class="orb"><strong data-i18n="hero.orb3t">難問題</strong><span data-i18n="hero.orb3d">為何物理過程伴隨經驗？</span></div>
-        <div class="orb"><strong data-i18n="hero.orb4t">多重視角</strong><span data-i18n="hero.orb4d">不預設單一正解</span></div>
+        <div class="orb"><strong data-i18n="hero.orb1t"></strong><span data-i18n="hero.orb1d"></span></div>
+        <div class="orb"><strong data-i18n="hero.orb2t"></strong><span data-i18n="hero.orb2d"></span></div>
+        <div class="orb"><strong data-i18n="hero.orb3t"></strong><span data-i18n="hero.orb3d"></span></div>
+        <div class="orb"><strong data-i18n="hero.orb4t"></strong><span data-i18n="hero.orb4d"></span></div>
       </div>
+      <ol class="toc-flow" id="toc-flow" aria-label="Site map"></ol>
     </section>
 
-    <!-- What is consciousness -->
-    <section class="section" id="what">
-      <span class="section-label" data-i18n="what.label">定義</span>
-      <h2 data-i18n="what.title">何謂意識？</h2>
-      <p class="lede" data-i18n="what.lede">「意識」一詞含糊；釐清層次，討論才不會各說各話。</p>
-      <div class="grid-3">
-        <article class="card">
-          <span class="tag">Phenomenal</span>
-          <h3 data-i18n="what.phenTitle">現象意識</h3>
-          <p data-i18n="what.phenBody"></p>
-        </article>
-        <article class="card">
-          <span class="tag">Access</span>
-          <h3 data-i18n="what.accessTitle">通道意識</h3>
-          <p data-i18n="what.accessBody"></p>
-        </article>
-        <article class="card">
-          <span class="tag">Self</span>
-          <h3 data-i18n="what.selfTitle">自我覺知</h3>
-          <p data-i18n="what.selfBody"></p>
-        </article>
+    <!-- Definitions -->
+    <section class="section" id="define">
+      <span class="section-label" data-i18n="define.label">定義</span>
+      <h2 data-i18n="define.title">何謂意識？多種「意識」</h2>
+      <p class="lede" data-i18n="define.lede"></p>
+      <div class="grid-3" id="define-cards"></div>
+      <article class="card" style="margin-top:1rem">
+        <h3 data-i18n="define.hardTitle"></h3>
+        <p data-i18n="define.hardBody"></p>
+      </article>
+      <p class="camp-pills" style="margin-top:1.5rem"><span class="section-label" data-i18n="define.campsTitle" style="margin:0"></span></p>
+      <div class="camp-pills" id="camp-pills"></div>
+      <p class="callout" data-i18n="define.note"></p>
+    </section>
+
+    <!-- 3D Brain -->
+    <section class="section" id="brain">
+      <span class="section-label" data-i18n="brain.label">神經解剖</span>
+      <h2 data-i18n="brain.title">意識相關的大腦區域</h2>
+      <p class="lede" data-i18n="brain.lede"></p>
+      <div class="brain-layout">
+        <div class="brain-stage">
+          <div id="brain-canvas" class="brain-canvas" role="img" aria-label="3D brain"></div>
+          <p class="brain-controls-hint" data-i18n="brain.dragHint"></p>
+        </div>
+        <div class="brain-side">
+          <div id="brain-chips" class="brain-chips"></div>
+          <div id="brain-detail" class="brain-detail card"></div>
+        </div>
       </div>
-      <div class="stack" style="margin-top:1.25rem">
-        <article class="card">
-          <h3 data-i18n="what.hardTitle">難問題與易問題</h3>
-          <p data-i18n="what.hardBody"></p>
-        </article>
-      </div>
-      <p class="camp-pills" style="margin-top:1.5rem"><span class="section-label" data-i18n="what.campsTitle" style="margin:0">主要陣營</span></p>
-      <div class="camp-pills" id="camp-pills">
-        <span class="pill">Dualism</span>
-        <span class="pill">Physicalism</span>
-        <span class="pill">Functionalism</span>
-        <span class="pill">Property dualism</span>
-        <span class="pill">Illusionism</span>
-        <span class="pill">Panpsychism</span>
-        <span class="pill">Idealism</span>
-        <span class="pill">Non-dual</span>
-      </div>
-      <p class="callout" data-i18n="what.note"></p>
+      <p class="callout" data-i18n="brain.disclaimer"></p>
+    </section>
+
+    <!-- Science -->
+    <section class="section" id="science">
+      <span class="section-label" data-i18n="science.label">科學</span>
+      <h2 data-i18n="science.title">意識的科學理論</h2>
+      <p class="lede" data-i18n="science.lede"></p>
+      <div class="grid-2" id="science-cards"></div>
     </section>
 
     <!-- Western philosophy -->
@@ -106,86 +110,73 @@
       <div class="figure-list" id="west-figures"></div>
     </section>
 
-    <!-- Eastern -->
-    <section class="section" id="east">
-      <span class="section-label" data-i18n="east.label">東方與宗教</span>
-      <h2 data-i18n="east.title">東方哲學與宗教中的意識</h2>
-      <p class="lede" data-i18n="east.lede"></p>
+    <!-- East + Meditation -->
+    <section class="section" id="meditation">
+      <span class="section-label" data-i18n="meditation.label">東方與禪修</span>
+      <h2 data-i18n="meditation.title">東方思想與佛教禪修中的意識體驗</h2>
+      <p class="lede" data-i18n="meditation.lede"></p>
 
-      <h3 style="margin-top:1.5rem" data-i18n="east.indianTitle">印度傳統</h3>
-      <div class="grid-2" style="margin-top:0.85rem">
-        <article class="card">
-          <h4 data-i18n="east.upanishad"></h4>
-          <p data-i18n="east.upanishadBody"></p>
-        </article>
-        <article class="card">
-          <h4 data-i18n="east.advaita"></h4>
-          <p data-i18n="east.advaitaBody"></p>
-        </article>
-        <article class="card">
-          <h4 data-i18n="east.buddhism"></h4>
-          <p data-i18n="east.buddhismBody"></p>
-        </article>
-        <article class="card">
-          <h4 data-i18n="east.yoga"></h4>
-          <p data-i18n="east.yogaBody"></p>
-        </article>
+      <h3 data-i18n="meditation.tradTitle"></h3>
+      <div class="grid-2" id="east-cards" style="margin-top:0.85rem"></div>
+
+      <h3 style="margin-top:2rem" data-i18n="meditation.stagesTitle"></h3>
+      <p class="prose" style="margin-top:0.5rem"><span data-i18n="meditation.stagesLede"></span></p>
+      <div class="stack" id="meditation-stages" style="margin-top:1rem"></div>
+
+      <h3 style="margin-top:2rem" data-i18n="meditation.mapTitle"></h3>
+      <p data-i18n="meditation.mapBody" style="color:var(--text-muted)"></p>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="meditation-map-table"></table>
       </div>
-
-      <h3 style="margin-top:2rem" data-i18n="east.chineseTitle">中國思想</h3>
-      <div class="grid-2" style="margin-top:0.85rem">
-        <article class="card">
-          <h4 data-i18n="east.zhuangzi"></h4>
-          <p data-i18n="east.zhuangziBody"></p>
-        </article>
-        <article class="card">
-          <h4 data-i18n="east.xin"></h4>
-          <p data-i18n="east.xinBody"></p>
-        </article>
-      </div>
-
-      <article class="card" style="margin-top:1rem">
-        <h4 data-i18n="east.abrahamicTitle"></h4>
-        <p data-i18n="east.abrahamicBody"></p>
-      </article>
-      <p class="callout" data-i18n="east.note"></p>
+      <p class="callout" data-i18n="meditation.note"></p>
     </section>
 
-    <!-- Science -->
-    <section class="section" id="science">
-      <span class="section-label" data-i18n="science.label">科學</span>
-      <h2 data-i18n="science.title">意識的科學</h2>
-      <p class="lede" data-i18n="science.lede"></p>
-      <div class="grid-2" style="margin-top:0.5rem">
-        <article class="card">
-          <h3 data-i18n="science.nccTitle"></h3>
-          <p data-i18n="science.nccBody"></p>
-        </article>
-        <article class="card">
-          <h3 data-i18n="science.gwtTitle"></h3>
-          <p data-i18n="science.gwtBody"></p>
-        </article>
-        <article class="card">
-          <h3 data-i18n="science.iitTitle"></h3>
-          <p data-i18n="science.iitBody"></p>
-        </article>
-        <article class="card">
-          <h3 data-i18n="science.ppTitle"></h3>
-          <p data-i18n="science.ppBody"></p>
-        </article>
-        <article class="card">
-          <h3 data-i18n="science.dmnTitle"></h3>
-          <p data-i18n="science.dmnBody"></p>
-        </article>
-        <article class="card">
-          <h3 data-i18n="science.anesthTitle"></h3>
-          <p data-i18n="science.anesthBody"></p>
-        </article>
+    <!-- Unconscious -->
+    <section class="section" id="unconscious">
+      <span class="section-label" data-i18n="unconscious.label">潛意識</span>
+      <h2 data-i18n="unconscious.title">潛意識、集體潛意識與多重「無意識」</h2>
+      <p class="lede" data-i18n="unconscious.lede"></p>
+
+      <div class="grid-2" id="unconscious-models"></div>
+
+      <h3 style="margin-top:2rem" data-i18n="unconscious.icebergTitle"></h3>
+      <div class="iceberg" id="iceberg" aria-hidden="false"></div>
+
+      <h3 style="margin-top:2rem" data-i18n="unconscious.compareTitle"></h3>
+      <div class="compare-table-wrap">
+        <table class="compare-table" id="unconscious-table"></table>
       </div>
-      <article class="card" style="margin-top:1rem">
-        <h3 data-i18n="science.otherTitle"></h3>
-        <p data-i18n="science.otherBody"></p>
-      </article>
+
+      <h3 style="margin-top:2rem" data-i18n="unconscious.pyramidTitle"></h3>
+      <div class="sense-pyramid" id="sense-pyramid"></div>
+      <p class="callout" data-i18n="unconscious.note"></p>
+    </section>
+
+    <!-- Mindmaps -->
+    <section class="section" id="mindmaps">
+      <span class="section-label" data-i18n="mindmaps.label">連結</span>
+      <h2 data-i18n="mindmaps.title">概念心智圖</h2>
+      <p class="lede" data-i18n="mindmaps.lede"></p>
+      <div class="mindmap-tabs" role="tablist">
+        <button type="button" class="mindmap-tab" role="tab" data-map="bridge" aria-selected="true" data-i18n="mindmaps.tabBridge"></button>
+        <button type="button" class="mindmap-tab" role="tab" data-map="unconscious" aria-selected="false" data-i18n="mindmaps.tabUnconscious"></button>
+        <button type="button" class="mindmap-tab" role="tab" data-map="practice" aria-selected="false" data-i18n="mindmaps.tabPractice"></button>
+      </div>
+      <div class="mindmap-panel active" id="mindmap-bridge" role="tabpanel">
+        <h3 data-i18n="mindmaps.mapBridge.title"></h3>
+        <p class="game-desc" data-i18n="mindmaps.mapBridge.desc"></p>
+        <div id="mindmap-canvas-bridge" class="mindmap-host"></div>
+      </div>
+      <div class="mindmap-panel" id="mindmap-unconscious" role="tabpanel">
+        <h3 data-i18n="mindmaps.mapUnconscious.title"></h3>
+        <p class="game-desc" data-i18n="mindmaps.mapUnconscious.desc"></p>
+        <div id="mindmap-canvas-unconscious" class="mindmap-host"></div>
+      </div>
+      <div class="mindmap-panel" id="mindmap-practice" role="tabpanel">
+        <h3 data-i18n="mindmaps.mapPractice.title"></h3>
+        <p class="game-desc" data-i18n="mindmaps.mapPractice.desc"></p>
+        <div id="mindmap-canvas-practice" class="mindmap-host"></div>
+      </div>
     </section>
 
     <!-- Research -->
@@ -201,14 +192,11 @@
       <span class="section-label" data-i18n="games.label">體驗</span>
       <h2 data-i18n="games.title">意識小遊戲</h2>
       <p class="lede games-intro" data-i18n="games.lede"></p>
-
       <div class="game-tabs" role="tablist">
         <button type="button" class="game-tab" role="tab" data-game="stroop" aria-selected="true" data-i18n="games.tabStroop">Stroop</button>
         <button type="button" class="game-tab" role="tab" data-game="change" aria-selected="false" data-i18n="games.tabChange">變化盲</button>
         <button type="button" class="game-tab" role="tab" data-game="quiz" aria-selected="false" data-i18n="games.tabQuiz">理論測驗</button>
       </div>
-
-      <!-- Stroop -->
       <div class="game-panel active" id="game-stroop" role="tabpanel">
         <h3 id="stroop-title">Stroop</h3>
         <p class="game-desc" id="stroop-desc"></p>
@@ -225,8 +213,6 @@
         </div>
         <p class="game-note" id="stroop-note"></p>
       </div>
-
-      <!-- Change blindness -->
       <div class="game-panel" id="game-change" role="tabpanel">
         <h3 id="cb-title">Change blindness</h3>
         <p class="game-desc" id="cb-desc"></p>
@@ -240,8 +226,6 @@
         <p class="game-status" id="cb-status"></p>
         <p class="game-note" id="cb-note"></p>
       </div>
-
-      <!-- Quiz -->
       <div class="game-panel" id="game-quiz" role="tabpanel">
         <h3 id="quiz-title">Quiz</h3>
         <p class="game-desc" id="quiz-desc"></p>
@@ -275,10 +259,14 @@
     <div class="footer-inner">
       <p data-i18n="footer.disclaimer"></p>
       <p data-i18n="footer.credit"></p>
+      <p class="portrait-credit"><a href="assets/portraits/ATTRIBUTION.md">Portrait attribution</a></p>
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
   <script src="js/i18n.js"></script>
+  <script src="js/brain.js"></script>
+  <script src="js/mindmaps.js"></script>
   <script src="js/games.js"></script>
   <script src="js/app.js"></script>
 </body>

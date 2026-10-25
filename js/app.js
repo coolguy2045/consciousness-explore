@@ -14,61 +14,219 @@
     document.documentElement.lang = lang === "zh" ? "zh-Hant" : "en";
     apply(lang);
     if (window.ConsciousnessGames) window.ConsciousnessGames.onLangChange();
+    if (window.ConsciousnessBrain) window.ConsciousnessBrain.onLangChange();
+    if (window.ConsciousnessMindmaps) window.ConsciousnessMindmaps.onLangChange();
+  }
+
+  function escapeHtml(s) {
+    return String(s)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+  function escapeAttr(s) {
+    return escapeHtml(s).replace(/'/g, "&#39;");
+  }
+
+  function portraitHtml(f) {
+    if (f.portrait) {
+      return `<img class="portrait" src="${escapeAttr(f.portrait)}" alt="${escapeAttr(
+        f.alt || f.name
+      )}" width="72" height="72" loading="lazy" />`;
+    }
+    const mono = f.mono || (f.name || "?").charAt(0);
+    return `<span class="portrait mono" aria-hidden="true">${escapeHtml(mono)}</span>`;
   }
 
   function apply(lang) {
     const d = window.t(lang);
 
-    // static data-i18n keys via nested path
     document.querySelectorAll("[data-i18n]").forEach((el) => {
       const path = el.getAttribute("data-i18n");
       const val = path.split(".").reduce((o, k) => (o ? o[k] : undefined), d);
-      if (val == null) return;
-      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") el.value = val;
-      else el.textContent = val;
+      if (val == null || typeof val === "object") return;
+      el.textContent = val;
     });
 
-    document.querySelectorAll("[data-i18n-aria]").forEach((el) => {
-      const path = el.getAttribute("data-i18n-aria");
-      const val = path.split(".").reduce((o, k) => (o ? o[k] : undefined), d);
-      if (val != null) el.setAttribute("aria-label", val);
-    });
-
-    // Lang button
     const btn = document.getElementById("lang-toggle");
     if (btn) btn.textContent = d.langBtn;
 
-    // Western figures
-    const westBox = document.getElementById("west-figures");
-    if (westBox) {
-      westBox.innerHTML = d.west.figures
+    // TOC
+    const toc = document.getElementById("toc-flow");
+    if (toc && d.toc) {
+      toc.innerHTML = d.toc
         .map(
-          (f) =>
-            `<article class="figure-item"><div><span class="name">${escapeHtml(
-              f.name
-            )}</span><span class="meta">${escapeHtml(
-              f.meta
-            )}</span></div><p>${escapeHtml(f.body)}</p></article>`
+          (item, i) =>
+            `<li><a href="${escapeAttr(item.h)}"><span class="toc-n">${i + 1}</span>${escapeHtml(
+              item.t
+            )}</a></li>`
         )
         .join("");
     }
 
-    // Research items
+    // Define cards
+    const defCards = document.getElementById("define-cards");
+    if (defCards && d.define.cards) {
+      defCards.innerHTML = d.define.cards
+        .map(
+          (c) =>
+            `<article class="card"><span class="tag">${escapeHtml(c.tag)}</span><h3>${escapeHtml(
+              c.title
+            )}</h3><p>${escapeHtml(c.body)}</p></article>`
+        )
+        .join("");
+    }
+
+    const pills = document.getElementById("camp-pills");
+    if (pills && d.define.camps) {
+      pills.innerHTML = d.define.camps
+        .split("·")
+        .map((s) => s.trim())
+        .filter(Boolean)
+        .map((s) => `<span class="pill">${escapeHtml(s)}</span>`)
+        .join("");
+    }
+
+    // Science
+    const sci = document.getElementById("science-cards");
+    if (sci && d.science.cards) {
+      sci.innerHTML = d.science.cards
+        .map(
+          (c) =>
+            `<article class="card"><h3>${escapeHtml(c.title)}</h3><p>${escapeHtml(
+              c.body
+            )}</p></article>`
+        )
+        .join("");
+    }
+
+    // West figures with portraits
+    const westBox = document.getElementById("west-figures");
+    if (westBox && d.west.figures) {
+      westBox.innerHTML = d.west.figures
+        .map(
+          (f) =>
+            `<article class="figure-item has-portrait">${portraitHtml(
+              f
+            )}<div class="figure-text"><span class="name">${escapeHtml(
+              f.name
+            )}</span><span class="meta">${escapeHtml(f.meta)}</span><p>${escapeHtml(
+              f.body
+            )}</p></div></article>`
+        )
+        .join("");
+    }
+
+    // East cards
+    const east = document.getElementById("east-cards");
+    if (east && d.meditation.eastCards) {
+      east.innerHTML = d.meditation.eastCards
+        .map((c) => {
+          const img = c.portrait
+            ? `<img class="portrait sm" src="${escapeAttr(c.portrait)}" alt="${escapeAttr(
+                c.alt || c.title
+              )}" width="56" height="56" loading="lazy" />`
+            : `<span class="portrait mono sm" aria-hidden="true">${escapeHtml(
+                c.mono || "·"
+              )}</span>`;
+          return `<article class="card card-with-portrait">${img}<div><h4>${escapeHtml(
+            c.title
+          )}</h4><p>${escapeHtml(c.body)}</p></div></article>`;
+        })
+        .join("");
+    }
+
+    // Meditation stages
+    const stages = document.getElementById("meditation-stages");
+    if (stages && d.meditation.stages) {
+      stages.innerHTML = d.meditation.stages
+        .map(
+          (s) =>
+            `<article class="card"><h3>${escapeHtml(s.t)}</h3><p>${escapeHtml(s.b)}</p></article>`
+        )
+        .join("");
+    }
+
+    // Meditation map table
+    const mtable = document.getElementById("meditation-map-table");
+    if (mtable && d.meditation.mapHeaders) {
+      mtable.innerHTML =
+        `<thead><tr>${d.meditation.mapHeaders
+          .map((h) => `<th>${escapeHtml(h)}</th>`)
+          .join("")}</tr></thead><tbody>${d.meditation.mapRows
+          .map((r) => `<tr>${r.map((c) => `<td>${escapeHtml(c)}</td>`).join("")}</tr>`)
+          .join("")}</tbody>`;
+    }
+
+    // Unconscious models
+    const um = document.getElementById("unconscious-models");
+    if (um && d.unconscious.models) {
+      um.innerHTML = d.unconscious.models
+        .map((m) => {
+          const img = m.portrait
+            ? `<img class="portrait" src="${escapeAttr(m.portrait)}" alt="${escapeAttr(
+                m.alt || m.title
+              )}" width="72" height="72" loading="lazy" />`
+            : `<span class="portrait mono" aria-hidden="true">${escapeHtml(m.mono || "?")}</span>`;
+          return `<article class="card card-with-portrait">${img}<div><h3>${escapeHtml(
+            m.title
+          )}</h3><p>${escapeHtml(m.body)}</p></div></article>`;
+        })
+        .join("");
+    }
+
+    // Iceberg
+    const ice = document.getElementById("iceberg");
+    if (ice && d.unconscious.iceberg) {
+      ice.innerHTML = d.unconscious.iceberg
+        .map(
+          (layer, i) =>
+            `<div class="ice-layer ice-${i}"><strong>${escapeHtml(layer.k)}</strong><span>${escapeHtml(
+              layer.v
+            )}</span></div>`
+        )
+        .join("");
+    }
+
+    // Unconscious compare table
+    const ut = document.getElementById("unconscious-table");
+    if (ut && d.unconscious.compareHeaders) {
+      ut.innerHTML =
+        `<thead><tr>${d.unconscious.compareHeaders
+          .map((h) => `<th>${escapeHtml(h)}</th>`)
+          .join("")}</tr></thead><tbody>${d.unconscious.compareRows
+          .map((r) => `<tr>${r.map((c) => `<td>${escapeHtml(c)}</td>`).join("")}</tr>`)
+          .join("")}</tbody>`;
+    }
+
+    // Pyramid
+    const pyr = document.getElementById("sense-pyramid");
+    if (pyr && d.unconscious.pyramid) {
+      pyr.innerHTML = d.unconscious.pyramid
+        .map(
+          (p, i) =>
+            `<div class="pyr-step" style="width:${92 - i * 10}%"><strong>${escapeHtml(
+              p.t
+            )}</strong><span>${escapeHtml(p.d)}</span></div>`
+        )
+        .join("");
+    }
+
+    // Research
     const researchBox = document.getElementById("research-items");
-    if (researchBox) {
+    if (researchBox && d.research.items) {
       researchBox.innerHTML = d.research.items
         .map(
           (it) =>
-            `<article class="card"><h3>${escapeHtml(it.t)}</h3><p>${escapeHtml(
-              it.b
-            )}</p></article>`
+            `<article class="card"><h3>${escapeHtml(it.t)}</h3><p>${escapeHtml(it.b)}</p></article>`
         )
         .join("");
     }
 
     // Resources
     const resBox = document.getElementById("resource-list");
-    if (resBox) {
+    if (resBox && d.resources.items) {
       resBox.innerHTML = d.resources.items
         .map(
           (it) =>
@@ -79,18 +237,7 @@
         .join("");
     }
 
-    // Camp pills from camps string ( · separated)
-    const pills = document.getElementById("camp-pills");
-    if (pills && d.what.camps) {
-      pills.innerHTML = d.what.camps
-        .split("·")
-        .map((s) => s.trim())
-        .filter(Boolean)
-        .map((s) => `<span class="pill">${escapeHtml(s)}</span>`)
-        .join("");
-    }
-
-    // Game notes & titles (panels)
+    // Games panel titles
     const map = [
       ["stroop-title", d.games.stroop.title],
       ["stroop-desc", d.games.stroop.desc],
@@ -105,27 +252,11 @@
       const el = document.getElementById(id);
       if (el) el.textContent = text;
     });
-
-    // Start buttons that use shared keys
     document.querySelectorAll("[data-i18n-games-start]").forEach((el) => {
       el.textContent = d.games.start;
     });
-    document.querySelectorAll("[data-i18n-games-restart]").forEach((el) => {
-      el.textContent = d.games.restart;
-    });
     const again = document.getElementById("quiz-again");
     if (again) again.textContent = d.games.quiz.again;
-  }
-
-  function escapeHtml(s) {
-    return String(s)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
-  function escapeAttr(s) {
-    return escapeHtml(s).replace(/'/g, "&#39;");
   }
 
   function initNav() {
@@ -152,9 +283,12 @@
     apply(lang);
     initNav();
     document.getElementById("lang-toggle").addEventListener("click", () => {
-      const next = (document.documentElement.getAttribute("data-lang") || "zh") === "zh" ? "en" : "zh";
+      const next =
+        (document.documentElement.getAttribute("data-lang") || "zh") === "zh" ? "en" : "zh";
       setLang(next);
     });
     if (window.ConsciousnessGames) window.ConsciousnessGames.init();
+    if (window.ConsciousnessBrain) window.ConsciousnessBrain.init();
+    if (window.ConsciousnessMindmaps) window.ConsciousnessMindmaps.init();
   });
 })();

@@ -587,3 +587,281 @@ h4 { font-size: 1.05rem; margin: 0 0 0.4rem; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
 }
+
+/* —— Extended sections: brain, meditation, unconscious, mindmaps, portraits —— */
+.toc-flow {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.55rem;
+  max-width: 52rem;
+}
+.toc-flow a {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: rgba(26, 23, 51, 0.75);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.88rem;
+}
+.toc-flow a:hover { border-color: var(--accent); color: var(--text); text-decoration: none; }
+.toc-n {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4rem; height: 1.4rem;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.2);
+  color: var(--accent-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+/* Portraits */
+.portrait {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-strong);
+  background: var(--bg-elevated);
+  flex-shrink: 0;
+}
+.portrait.sm { width: 56px; height: 56px; }
+.portrait.mono {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: var(--accent-3);
+  background: linear-gradient(145deg, #2a2450, #1a1733);
+}
+.figure-item.has-portrait {
+  grid-template-columns: 72px 1fr;
+  align-items: start;
+}
+.figure-text .name { display: block; }
+.card-with-portrait {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.card-with-portrait h3, .card-with-portrait h4 { margin-top: 0; }
+
+/* Brain */
+.brain-layout {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+.brain-stage {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 320px;
+}
+.brain-canvas {
+  width: 100%;
+  height: 380px;
+  touch-action: none;
+}
+.brain-canvas canvas { width: 100% !important; height: 100% !important; display: block; cursor: grab; }
+.brain-controls-hint {
+  margin: 0;
+  padding: 0.5rem 1rem 0.85rem;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+}
+.brain-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+.brain-chip {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.brain-chip[aria-pressed="true"] {
+  background: rgba(167, 139, 250, 0.22);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.brain-detail h3 { color: var(--accent-2); }
+.brain-detail p { margin: 0.5rem 0 0; color: var(--text-muted); font-size: 0.92rem; }
+.brain-hint { color: var(--text-dim) !important; margin: 0 !important; }
+.brain-note { font-size: 0.85rem !important; color: var(--text-dim) !important; }
+
+/* Tables */
+.compare-table-wrap {
+  overflow-x: auto;
+  margin-top: 0.85rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+}
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+.compare-table th, .compare-table td {
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  color: var(--text-muted);
+}
+.compare-table th {
+  background: rgba(167, 139, 250, 0.1);
+  color: var(--accent-2);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.compare-table tr:last-child td { border-bottom: none; }
+
+/* Iceberg */
+.iceberg {
+  margin-top: 0.85rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+.ice-layer {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  border: 1px solid var(--border);
+  max-width: 520px;
+}
+.ice-layer strong { display: block; color: var(--text); margin-bottom: 0.15rem; }
+.ice-layer span { font-size: 0.85rem; color: var(--text-muted); }
+.ice-0 { width: 42%; background: rgba(103, 232, 249, 0.12); }
+.ice-1 { width: 55%; background: rgba(167, 139, 250, 0.12); }
+.ice-2 { width: 68%; background: rgba(240, 171, 252, 0.1); }
+.ice-3 { width: 82%; background: rgba(99, 102, 241, 0.12); }
+.ice-4 { width: 96%; background: rgba(30, 27, 60, 0.9); border-color: var(--border-strong); }
+
+/* Pyramid */
+.sense-pyramid {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+}
+.pyr-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 1rem;
+  text-align: center;
+}
+.pyr-step strong { display: block; color: var(--accent-3); font-size: 0.95rem; }
+.pyr-step span { font-size: 0.82rem; color: var(--text-dim); }
+
+/* Mindmaps */
+.mindmap-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.mindmap-tab {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+.mindmap-tab[aria-selected="true"] {
+  background: rgba(167, 139, 250, 0.2);
+  border-color: var(--accent);
+  color: var(--text);
+}
+.mindmap-panel { display: none; }
+.mindmap-panel.active { display: block; }
+.mindmap-host, .mindmap-viewport {
+  position: relative;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-height: 420px;
+}
+.mindmap-toolbar {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.65rem;
+  z-index: 2;
+  display: flex;
+  gap: 0.35rem;
+}
+.mindmap-toolbar .btn {
+  padding: 0.35rem 0.65rem;
+  min-width: 2rem;
+  font-size: 0.85rem;
+}
+.mindmap-svg {
+  width: 100%;
+  height: 480px;
+  display: block;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(99, 102, 241, 0.08), transparent 55%),
+    var(--bg-card);
+  cursor: grab;
+}
+.mm-link {
+  stroke: rgba(167, 139, 250, 0.45);
+  stroke-width: 1.5;
+}
+.mm-pill {
+  fill: #1f1b3a;
+  stroke: rgba(167, 139, 250, 0.45);
+  stroke-width: 1.25;
+}
+.mm-pill.root {
+  fill: #2f2660;
+  stroke: var(--accent-2);
+}
+.mm-label {
+  fill: var(--text);
+  font-size: 12px;
+  font-family: var(--font-sans);
+  pointer-events: none;
+}
+.mm-badge { fill: var(--accent-2); }
+.mm-badge.closed { fill: var(--accent-3); }
+
+.portrait-credit { font-size: 0.8rem; }
+.portrait-credit a { color: var(--text-dim); }
+
+@media (max-width: 860px) {
+  .brain-layout { grid-template-columns: 1fr; }
+  .brain-canvas { height: 300px; }
+  .figure-item.has-portrait { grid-template-columns: 64px 1fr; }
+  .ice-0, .ice-1, .ice-2, .ice-3, .ice-4 { width: 100%; }
+  .mindmap-svg { height: 400px; }
+}
