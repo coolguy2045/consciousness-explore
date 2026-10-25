@@ -180,23 +180,35 @@
       <h2 data-i18n="mindmaps.title">概念心智圖</h2>
       <p class="lede" data-i18n="mindmaps.lede"></p>
       <div class="mindmap-tabs" role="tablist">
-        <button type="button" class="mindmap-tab" role="tab" data-map="bridge" aria-selected="true" data-i18n="mindmaps.tabBridge"></button>
+        <button type="button" class="mindmap-tab" role="tab" data-map="science" aria-selected="true" data-i18n="mindmaps.tabScience"></button>
+        <button type="button" class="mindmap-tab" role="tab" data-map="philosophy" aria-selected="false" data-i18n="mindmaps.tabPhilosophy"></button>
         <button type="button" class="mindmap-tab" role="tab" data-map="unconscious" aria-selected="false" data-i18n="mindmaps.tabUnconscious"></button>
+        <button type="button" class="mindmap-tab" role="tab" data-map="embodied" aria-selected="false" data-i18n="mindmaps.tabEmbodied"></button>
         <button type="button" class="mindmap-tab" role="tab" data-map="practice" aria-selected="false" data-i18n="mindmaps.tabPractice"></button>
       </div>
-      <div class="mindmap-panel active" id="mindmap-bridge" role="tabpanel">
-        <h3 data-i18n="mindmaps.mapBridge.title"></h3>
-        <p class="game-desc" data-i18n="mindmaps.mapBridge.desc"></p>
-        <div id="mindmap-canvas-bridge" class="mindmap-host"></div>
+      <div class="mindmap-panel active" id="mindmap-science" role="tabpanel">
+        <h3 data-mm-title="science"></h3>
+        <p class="game-desc" data-mm-desc="science"></p>
+        <div id="mindmap-canvas-science" class="mindmap-host"></div>
+      </div>
+      <div class="mindmap-panel" id="mindmap-philosophy" role="tabpanel">
+        <h3 data-mm-title="philosophy"></h3>
+        <p class="game-desc" data-mm-desc="philosophy"></p>
+        <div id="mindmap-canvas-philosophy" class="mindmap-host"></div>
       </div>
       <div class="mindmap-panel" id="mindmap-unconscious" role="tabpanel">
-        <h3 data-i18n="mindmaps.mapUnconscious.title"></h3>
-        <p class="game-desc" data-i18n="mindmaps.mapUnconscious.desc"></p>
+        <h3 data-mm-title="unconscious"></h3>
+        <p class="game-desc" data-mm-desc="unconscious"></p>
         <div id="mindmap-canvas-unconscious" class="mindmap-host"></div>
       </div>
+      <div class="mindmap-panel" id="mindmap-embodied" role="tabpanel">
+        <h3 data-mm-title="embodied"></h3>
+        <p class="game-desc" data-mm-desc="embodied"></p>
+        <div id="mindmap-canvas-embodied" class="mindmap-host"></div>
+      </div>
       <div class="mindmap-panel" id="mindmap-practice" role="tabpanel">
-        <h3 data-i18n="mindmaps.mapPractice.title"></h3>
-        <p class="game-desc" data-i18n="mindmaps.mapPractice.desc"></p>
+        <h3 data-mm-title="practice"></h3>
+        <p class="game-desc" data-mm-desc="practice"></p>
         <div id="mindmap-canvas-practice" class="mindmap-host"></div>
       </div>
     </section>
@@ -296,6 +308,7 @@
   <script src="js/i18n.js"></script>
   <script src="js/content-deep.js"></script>
   <script type="module" src="js/brain.js"></script>
+  <script src="js/mindmap-data.js"></script>
   <script src="js/mindmaps.js"></script>
   <script src="js/games.js"></script>
   <script src="js/app.js"></script>
