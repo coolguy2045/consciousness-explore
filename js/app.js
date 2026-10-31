@@ -312,6 +312,11 @@
       uncEssays.innerHTML = renderEssayArticles(d.unconscious.essays, false);
     }
 
+    const intentionEssays = document.getElementById("intention-essays");
+    if (intentionEssays && d.intention && d.intention.essays) {
+      intentionEssays.innerHTML = renderEssayArticles(d.intention.essays, true);
+    }
+
     // Research
     const researchBox = document.getElementById("research-items");
     if (researchBox && d.research.items) {

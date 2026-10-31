@@ -14,6 +14,7 @@ window.I18N = {
       "west": "西方",
       "meditation": "禪修",
       "unconscious": "潛意識",
+      "intention": "意念",
       "mindmaps": "心智圖",
       "research": "研究",
       "games": "遊戲",
@@ -64,6 +65,10 @@ window.I18N = {
       {
         "h": "#unconscious",
         "t": "潛意識圖表"
+      },
+      {
+        "h": "#intention",
+        "t": "意念與機緣"
       },
       {
         "h": "#mindmaps",
@@ -621,6 +626,14 @@ window.I18N = {
       ],
       "note": "圖表是教學簡化。榮格與弗洛伊德傳統內部亦有修正與分流。"
     },
+    "intention": {
+      "label": "意念與機緣",
+      "title": "意念能否讓隨機之事偏向所願？",
+      "lede": "從科學、哲學、玄學到修練的深度條目——載入中。",
+      "tocHint": "點標題展開／收合",
+      "essaysTitle": "深讀條目",
+      "disclaimer": "本節不構成超自然效果保證；詳見各條目。"
+    },
     "mindmaps": {
       "label": "連結",
       "title": "概念心智圖",
@@ -670,6 +683,21 @@ window.I18N = {
           "a": "Stanford Encyclopedia — Consciousness",
           "u": "https://plato.stanford.edu/entries/consciousness/",
           "n": "總覽"
+        },
+        {
+          "a": "SEP — Free Will",
+          "u": "https://plato.stanford.edu/entries/freewill/",
+          "n": "意志／自由"
+        },
+        {
+          "a": "SEP — Mental Causation",
+          "u": "https://plato.stanford.edu/entries/mental-causation/",
+          "n": "心因"
+        },
+        {
+          "a": "PEAR lab archive (Princeton)",
+          "u": "https://pearlab.icrl.org/publications.html",
+          "n": "意念－REG 歷史實驗（存檔／介紹）"
         },
         {
           "a": "SEP — Neuroscience of Consciousness",
@@ -963,6 +991,7 @@ window.I18N = {
       "west": "West",
       "meditation": "Meditation",
       "unconscious": "Unconscious",
+      "intention": "Intention",
       "mindmaps": "Mindmaps",
       "research": "Research",
       "games": "Games",
@@ -1013,6 +1042,10 @@ window.I18N = {
       {
         "h": "#unconscious",
         "t": "Unconscious charts"
+      },
+      {
+        "h": "#intention",
+        "t": "Intention & chance"
       },
       {
         "h": "#mindmaps",
@@ -1570,6 +1603,14 @@ window.I18N = {
       ],
       "note": "Charts are teaching simplifications. Freudian and Jungian lineages also revise themselves."
     },
+    "intention": {
+      "label": "Intention & chance",
+      "title": "Can intention bias chance toward what you hope for?",
+      "lede": "Deep entries across science, philosophy, mysticism, and practice — loading.",
+      "tocHint": "Click to expand/collapse",
+      "essaysTitle": "Deep entries",
+      "disclaimer": "No supernatural guarantees; see each entry."
+    },
     "mindmaps": {
       "label": "Links",
       "title": "Concept mindmaps",
@@ -1619,6 +1660,21 @@ window.I18N = {
           "a": "Stanford Encyclopedia — Consciousness",
           "u": "https://plato.stanford.edu/entries/consciousness/",
           "n": "Overview"
+        },
+        {
+          "a": "SEP — Free Will",
+          "u": "https://plato.stanford.edu/entries/freewill/",
+          "n": "Free will"
+        },
+        {
+          "a": "SEP — Mental Causation",
+          "u": "https://plato.stanford.edu/entries/mental-causation/",
+          "n": "Mental causation"
+        },
+        {
+          "a": "PEAR lab archive (Princeton)",
+          "u": "https://pearlab.icrl.org/publications.html",
+          "n": "Historical intention–REG program"
         },
         {
           "a": "SEP — Neuroscience of Consciousness",
